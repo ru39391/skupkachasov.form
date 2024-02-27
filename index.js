@@ -31,8 +31,6 @@ class ImgInputHandler {
         this.imgAddBtnSel = '.js-images-add';
         this.imgRemoveBtnSel = '.js-images-remove';
         this.errorMessRowSel = '.js-error-message';
-
-        this.currIndex = null;
   
         this.init(options);
     }
@@ -76,10 +74,10 @@ class ImgInputHandler {
      */
     handleError(idx, mess = '') {
         const errorMessRow = this.errorMessRows[idx];
-        const { classList } = errorMessRow;
+        const { classList } = this.imgHolders[idx];
 
         errorMessRow.textContent = mess;
-        mess ? classList.remove(this.hideClass) : classList.add(this.hideClass);
+        mess ? classList.add(this.errorClass) : classList.remove(this.errorClass);
     }
 
     /**
@@ -93,8 +91,6 @@ class ImgInputHandler {
         this.inputsList[idx].files = filesList.files;
 
         this.handleControlBtns(idx);
-
-        console.log(this.inputsList[idx].files);
     }
 
     /**
@@ -186,8 +182,7 @@ class ImgInputHandler {
             tagName: 'button',
             classArr: this.imgBtnClassArr,
             data: {
-                type: 'button',
-                textContent: 'X'
+                type: 'button'
             }
         });
 
@@ -224,6 +219,7 @@ class ImgInputHandler {
     handleControlBtns(idx) {
         const { classList: imgAddBtnClassList } = this.imgAddBtns[idx];
         const { classList: imgRemoveBtnClassList } = this.imgRemoveBtns[idx];
+        const { classList: imgRowClassList } = this.imgRows[idx];
 
         [{
             isCorrect: this.filesArr[idx][ITEMS_KEY].length < 10,
@@ -231,6 +227,9 @@ class ImgInputHandler {
         }, {
             isCorrect: this.filesArr[idx][ITEMS_KEY].length > 0,
             classList: imgRemoveBtnClassList
+        }, {
+            isCorrect: this.filesArr[idx][ITEMS_KEY].length > 0,
+            classList: imgRowClassList
         }].forEach(({isCorrect, classList}) => isCorrect ? classList.remove(this.hideClass) : classList.add(this.hideClass));
     }
 

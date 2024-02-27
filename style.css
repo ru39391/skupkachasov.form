@@ -3155,8 +3155,7 @@ a.header__social-telegram, .header__social-watsapp {
     margin: 0 auto 16px;
 }
 
-.form-input__file,
-.form__image-preview.is-hidden {
+.form-input__file.is-hidden {
     display: none;
 }
 
@@ -3168,14 +3167,53 @@ a.header__social-telegram, .header__social-watsapp {
     top: -16px;
 }
 
-.form__image-preview.is-hidden + .form-input__file,
-.form-input__file_type_toggler.is-visible {
-    display: flex;
-}
-
-.form__input-holder.is-error .form__image-preview,
 .form__input-holder.is-error .form-input__file_type_toggler {
     display: none;
+}
+
+.form__img-row {
+    gap: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 24px;
+}
+
+.form__img-row.is-hidden {
+    display: none;
+}
+
+.form__img-col {
+    height: 72px;
+    flex: 0 0 72px;
+    position: relative;
+    box-shadow: 5px 5px 10px 0 rgba(0,0,0,.1);
+}
+
+.form__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form__img-btn {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+	width: 16px;
+	height: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	border-radius: 50%;
+	background-color: #008b55;
+}
+
+.form__img-btn:before {
+	content: '×';
+	color: #fff;
+	font-size: 16px;
+	line-height: 20px;
 }
 
 @keyframes show {
