@@ -181,113 +181,6 @@ const handleInputs = (form) => {
     }));
 }
 
-const setImgInputData = (input) => {
-    const {
-        inputHolder: inputHolderSel,
-        errorContent: errorContentSel,
-        imgPreview: imgPreviewSel,
-        imgToggler: imgTogglerSel
-    } = FORM_SELECTORS;
-    const inputHolder = input.closest(inputHolderSel);
-
-    return {
-        inputHolder,
-        imgPreview: inputHolder.querySelector(imgPreviewSel),
-        imgToggler: inputHolder.querySelector(imgTogglerSel),
-        errorContent: inputHolder.querySelector(errorContentSel)
-    }
-}
-
-const unsetImgPreview = (input, errorMsg = '') => {
-    if(!input) {
-        return;
-    }
-
-    const {
-        imgPreview,
-        imgToggler,
-        errorContent
-    } = setImgInputData(input);
-
-    errorContent.textContent = errorMsg;
-    input.value = '';
-    imgPreview.src = '#';
-    imgPreview.classList.add(FORM_STATE.hidden);
-    imgToggler.classList.remove(FORM_STATE.visible);
-}
-
-const handleImgPreview = ({ input, inputHolder, imgPreview, imgToggler, errorContent }) => {
-    const file = input.files[0];
-    if(!file) {
-        inputHolder.classList.add(FORM_STATE.error);
-        errorContent.textContent = ERROR_MESSAGES.imgTypeError;
-        return;
-    }
-
-    const reader = new FileReader();
-
-    if(file.size < 2 * 1024 * 1024) {
-        reader.addEventListener('load', (event) => {
-            const { result: src } = event.target;
-
-            inputHolder.classList.remove(FORM_STATE.error);
-            errorContent.textContent = '';
-            imgPreview.src = src;
-            imgPreview.classList.remove(FORM_STATE.hidden);
-            imgToggler.classList.add(FORM_STATE.visible);
-        });
-        reader.readAsDataURL(file);
-    } else {
-        inputHolder.classList.add(FORM_STATE.error);
-        unsetImgPreview(input, ERROR_MESSAGES.imgSizeError);
-    }
-    
-    imgToggler.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        inputHolder.classList.remove(FORM_STATE.error);
-        unsetImgPreview(input);
-    });
-}
-
-const handleImgInput = (event) => {
-    const { target } = event;
-    const {
-        inputHolder,
-        imgPreview,
-        imgToggler,
-        errorContent
-    } = setImgInputData(target);
-
-    handleImgPreview({
-        input: target,
-        inputHolder,
-        imgPreview,
-        imgToggler,
-        errorContent
-    });
-}
-
-const initFormHandler = () => {
-    const formsArr = Array.from(document.querySelectorAll(FORM_SELECTORS.form));
-
-    if(!formsArr.length) {
-        return;
-    }
-
-    formsArr.forEach(form => handleInputs(form));
-}
-
-const initImgHandler = () => {
-    const imgInputsArr = Array.from(document.querySelectorAll(FORM_SELECTORS.imgInput));
-
-    if(!imgInputsArr.length) {
-        return;
-    }
-
-    imgInputsArr.forEach(input => input.addEventListener('change', handleImgInput));
-}
-
 const handlePhoneInput = (input) => {
   let keyCode;
 
@@ -361,7 +254,7 @@ const handleResponse = (event) => {
 
     if(response.success) {
         fieldset.classList.add(FORM_STATE.hidden);
-        unsetImgPreview(imgInput);
+        //unsetImgPreview(imgInput);
     } else {
         formContent.classList.add(FORM_STATE.error);
     }
@@ -376,6 +269,5 @@ const handleResponse = (event) => {
 }
 
 initPhoneMask();
-initImgHandler();
 initFormHandler();
 document.addEventListener('fetchit:after', handleResponse);
