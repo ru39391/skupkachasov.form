@@ -7,6 +7,14 @@ const ERROR_MESSAGES = {
 const ITEMS_KEY = 'items';
 const SIZE_KEY = 'size';
 
+/**
+ * Кастомизация поля загрузки изображений
+ * @param {Object} options - объект настроек
+ * @param {Array} options.inputs - массив элементов input[type="file"]
+ * @param {string} options.imgClass - класс миниатюры загруженного изображения
+ * @param {string} options.imgColClass - класс контейнера миниатюры изображения
+ * @param {string} options.imgBtnClass - класс кнопки для удаления миниатюры изображения
+ */
 class ImgInputHandler {
     constructor(options) {
         this.hideClass = 'is-hidden';
@@ -29,6 +37,10 @@ class ImgInputHandler {
         this.init(options);
     }
 
+    /**
+     * Инициализация компонента
+     * @param {Object} options - объект настроек
+     */
     init(options) {
         const {
             inputs,
@@ -57,6 +69,11 @@ class ImgInputHandler {
         this.bindEvents();
     }
 
+    /**
+     * Обработка ошибок
+     * @param {number} idx - номер элемента в массиве
+     * @param {string} mess - текст ошибки
+     */
     handleError(idx, mess = '') {
         const errorMessRow = this.errorMessRows[idx];
         const { classList } = errorMessRow;
@@ -65,6 +82,10 @@ class ImgInputHandler {
         mess ? classList.remove(this.hideClass) : classList.add(this.hideClass);
     }
 
+    /**
+     * Обновление значения input[type="file"] при изменении массива миниатюр
+     * @param {number} idx - номер элемента в массиве
+     */
     setInputValue(idx) {
         const filesList = new DataTransfer();
 
@@ -76,6 +97,10 @@ class ImgInputHandler {
         console.log(this.inputsList[idx].files);
     }
 
+    /**
+     * Сброс значения input[type="file"]
+     * @param {number} idx - номер элемента в массиве
+     */
     resetData(idx) {
         if(!this.imgColsData[idx].length) {
             return;
@@ -91,6 +116,10 @@ class ImgInputHandler {
         this.setInputValue(idx);
     }
 
+    /**
+     * Удаление миниатюры изображения, обновление массива загруженных файлов
+     * @param {Event} event - событие
+     */
     removeItem(event) {
         const { target } = event;
         const imgRow = target.closest(this.imgRowSel);
@@ -110,6 +139,14 @@ class ImgInputHandler {
         this.setInputValue(rowIdx);
     }
 
+    /**
+     * Создание html-элемента
+     * @param {Object} options - объект настроек
+     * @param {string} options.tagName - тэг элемента
+     * @param {Array} options.classArr - массив классов элемента
+     * @param {Object} options.data - объект атрибутов элемента
+     * @returns {HTMLElement} - разметка элемента
+     */
     createItem({
         tagName,
         classArr,
@@ -124,6 +161,11 @@ class ImgInputHandler {
         return item;
     }
 
+    /**
+     * Создание разметки для миниатюр загруженных изображений
+     * @param {Object} item - объект обработанного файла
+     * @returns {HTMLElement} - разметка контейнера изображения
+     */
     loadReader(item) {
         const { result: src } = item;
 
@@ -157,6 +199,11 @@ class ImgInputHandler {
         return col;
     }
 
+    /**
+     * Обработка значения input[type="file"]
+     * @param {number} idx - номер элемента в массиве
+     * @param {Object} file - объект данных файла
+     */
     handleInput(idx, file) {
         const reader = new FileReader();
 
@@ -170,6 +217,10 @@ class ImgInputHandler {
         reader.readAsDataURL(file);
     }
 
+    /**
+     * Изменение состояния кнопок удаления и загрузки изображений
+     * @param {number} idx - номер элемента в массиве
+     */
     handleControlBtns(idx) {
         const { classList: imgAddBtnClassList } = this.imgAddBtns[idx];
         const { classList: imgRemoveBtnClassList } = this.imgRemoveBtns[idx];
@@ -183,6 +234,10 @@ class ImgInputHandler {
         }].forEach(({isCorrect, classList}) => isCorrect ? classList.remove(this.hideClass) : classList.add(this.hideClass));
     }
 
+    /**
+     * Обновление поля ввода input[type="file"]
+     * @param {Event} event - событие
+     */
     changeInput(event) {
         const { target } = event;
         const files = Array.from(target.files);
@@ -210,6 +265,10 @@ class ImgInputHandler {
         }
     }
 
+    /**
+     * Удаление всех загруженных изображений
+     * @param {Event} event - событие
+     */
     resetInput(event) {
         event.preventDefault();
 
@@ -218,6 +277,9 @@ class ImgInputHandler {
         this.resetData(this.imgRemoveBtns.indexOf(currentTarget));
     }
 
+    /**
+     * Добавление слушателей событий
+     */
     bindEvents() {
         this.inputsList.forEach(input => {
             input.addEventListener('change', this.changeInput.bind(this));
