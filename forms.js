@@ -136,7 +136,6 @@ const checkStringField = (input) => {
  */
 const checkPhoneField = (input) => {
   const { value } = input;
-  console.log(value.split('')[3] && Number(value.split('')[3]) === 9);
   const incorrectCases = [
     !validatePhone(value),
     !(value.split('')[3] && Number(value.split('')[3]) === 9),
@@ -199,7 +198,7 @@ const handlePhoneInput = (input) => {
         startsWith: '7'
       },
       {
-        mask: '0 000 000-00-00',
+        mask: '+7 000 000-00-00',
         startsWith: '8'
       },
       {
