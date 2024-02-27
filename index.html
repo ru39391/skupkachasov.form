@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+    <TITLE>test</TITLE>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  </head>
+  <body class="m-0 p-5">
+    <form class="form js-form row" method="post" enctype="multipart/form-data">
+      <div class="form__input-holder form__input-holder_field_image col-4 js-input-holder">
+        <div class="form__img-row js-image-row"></div>
+        <label class="form-input__file form-input__file_holder_image js-images-add">
+            <input class="js-input-image" type="file" name="file[]" accept="image/*" multiple>
+            <span class="input-file-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15.8334 10.8317H10.8334V15.8317H9.16669V10.8317H4.16669V9.16504H9.16669V4.16504H10.8334V9.16504H15.8334V10.8317Z" fill="#218316"/>
+              </svg>
+            </span>           
+            <span class="input-file-text">добавить фото</span>
+        </label>
+        <button class="form-input__file form-input__file_type_toggler js-images-remove is-hidden" type="button">
+            <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0H6C4.897 0 4 0.897 4 2V3H0V5H2V18C2 19.103 2.897 20 4 20H14C15.103 20 16 19.103 16 18V5H18V3H14V2C14 0.897 13.103 0 12 0ZM6 2H12V3H6V2ZM14 18H4V5H14V18Z" fill="#218316"/>
+                <path d="M6 7H8V16H6V7Z" fill="#218316"/>
+                <path d="M10 7H12V16H10V7Z" fill="#218316"/>
+            </svg>
+            <span class="input-file-text">удалить фото</span>
+        </button>
+        <span class="form__error js-error-message is-hidden"></span>
+      </div>
+      <hr />
+
+      <div class="form__input-holder form__input-holder_field_image col-4 js-input-holder">
+        <div class="form__img-row js-image-row"></div>
+        <label class="form-input__file form-input__file_holder_image js-images-add">
+            <input class="js-input-image" type="file" name="file[]" accept="image/*" multiple>
+            <span class="input-file-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15.8334 10.8317H10.8334V15.8317H9.16669V10.8317H4.16669V9.16504H9.16669V4.16504H10.8334V9.16504H15.8334V10.8317Z" fill="#218316"/>
+              </svg>
+            </span>           
+            <span class="input-file-text">добавить фото</span>
+        </label>
+        <button class="form-input__file form-input__file_type_toggler js-images-remove is-hidden" type="button">
+            <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0H6C4.897 0 4 0.897 4 2V3H0V5H2V18C2 19.103 2.897 20 4 20H14C15.103 20 16 19.103 16 18V5H18V3H14V2C14 0.897 13.103 0 12 0ZM6 2H12V3H6V2ZM14 18H4V5H14V18Z" fill="#218316"/>
+                <path d="M6 7H8V16H6V7Z" fill="#218316"/>
+                <path d="M10 7H12V16H10V7Z" fill="#218316"/>
+            </svg>
+            <span class="input-file-text">удалить фото</span>
+        </button>
+        <span class="form__error js-error-message is-hidden"></span>
+      </div>
+    </form>
+    <script src="index.js"></script>
+
+    <style type="text/css">
+      .form__input-holder {
+        gap: 16px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .form__img-row {
+        gap: 16px;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .form__img-col {
+        height: 96px;
+        flex: 0 0 96px;
+        position: relative;
+      }
+
+      .form__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .form__img-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      .form-input__file.is-hidden,
+      .form__error.is-hidden {
+        display: none;
+      }
+    </style>
+  </body>
+</html>
