@@ -64,7 +64,7 @@ const validateString = (string) => {
  * @return {boolean}
  */
 const validatePhone = (phone) => {
-  return !(phone.length < 18);
+  return !(phone[0] === '+' ? phone.length < 16 : phone.length < 15);
 };
 
 /**
@@ -136,9 +136,10 @@ const checkStringField = (input) => {
  */
 const checkPhoneField = (input) => {
   const { value } = input;
+  console.log(value.split('')[3] && Number(value.split('')[3]) === 9);
   const incorrectCases = [
     !validatePhone(value),
-    ![3, 4, 8, 9].includes(Number(value.split("")[4])),
+    !(value.split('')[3] && Number(value.split('')[3]) === 9),
   ];
   const isValid = incorrectCases.some((item) => item);
 
@@ -191,52 +192,27 @@ const handleInputs = (form) => {
 };
 
 const handlePhoneInput = (input) => {
-  let keyCode;
+  const phoneMask = IMask(input, {
+    mask: [
+      {
+        mask: '+7 000 000-00-00',
+        startsWith: '7'
+      },
+      {
+        mask: '0 000 000-00-00',
+        startsWith: '8'
+      },
+      {
+        mask: '+7 000 000-00-00',
+        startsWith: ''
+      }
+    ],
+    dispatch: (appended, dynamicMasked) => {
+      let number = (dynamicMasked.value + appended).replace(/\D/g,'');
 
-  function mask(event) {
-    if (!event.keyCode) {
-      keyCode = event.keyCode;
+      return dynamicMasked.compiledMasks.find(m => number.indexOf(m.startsWith) === 0);
     }
-
-    const { target } = event;
-    const valueArr = this.value.split('');
-    const pos = this.selectionStart;
-    if (pos < 3) event.preventDefault();
-    const matrix = "+7 (___) ___ __ __";
-
-    let i = 0;
-    const def = matrix.replace(/\D/g, "");
-    const val = this.value.replace(/\D/g, "");
-    let newValue = matrix.replace(/[_\d]/g, (a) =>
-      i < val.length ? val.charAt(i++) || def.charAt(i) : a
-    );
-    i = newValue.indexOf("_");
-    if (i !== -1) {
-      newValue = newValue.slice(0, i);
-    }
-    let reg = matrix
-      .substr(0, this.value.length)
-      .replace(/_+/g, (a) => `\\d{1,${a.length}}`)
-      .replace(/[+()]/g, "\\$&");
-    reg = new RegExp(`^${reg}$`);
-    if (
-      !reg.test(this.value) ||
-      this.value.length < 5 ||
-      (keyCode > 47 && keyCode < 58)
-    ) {
-      this.value = newValue;
-    }
-    if (event.type === "blur" && this.value.length < 5) this.value = "";
-
-    if (event.type === "input" && valueArr[4] !== undefined) {
-      target.value = ![3, 4, 8, 9].includes(Number(valueArr[4])) ? this.value.replace(`(${this.value[4]}`, '(9') : this.value;
-    }
-  }
-
-  input.addEventListener("input", mask, false);
-  input.addEventListener("focus", mask, false);
-  input.addEventListener("blur", mask, false);
-  input.addEventListener("keydown", mask, false);
+  });
 };
 
 const initPhoneMask = () => {
