@@ -197,9 +197,13 @@ const handlePhoneInput = (input) => {
     if (!event.keyCode) {
       keyCode = event.keyCode;
     }
+
+    const { target } = event;
+    const valueArr = this.value.split('');
     const pos = this.selectionStart;
     if (pos < 3) event.preventDefault();
     const matrix = "+7 (___) ___ __ __";
+
     let i = 0;
     const def = matrix.replace(/\D/g, "");
     const val = this.value.replace(/\D/g, "");
@@ -223,6 +227,10 @@ const handlePhoneInput = (input) => {
       this.value = newValue;
     }
     if (event.type === "blur" && this.value.length < 5) this.value = "";
+
+    if (event.type === "input" && valueArr[4] !== undefined) {
+      target.value = ![3, 4, 8, 9].includes(Number(valueArr[4])) ? this.value.replace(`(${this.value[4]}`, '(9') : this.value;
+    }
   }
 
   input.addEventListener("input", mask, false);

@@ -7,6 +7,10 @@
   </head>
   <body class="m-0 p-5">
     <form class="form js-form row" method="post" enctype="multipart/form-data">
+      <label class="form__input-holder form-input__phone js-input-holder" for="#">
+        <input class="form__input js-input-field js-input-type-phone" type="tel" name="phone" placeholder="Телефон">
+        <span class="form__error js-error-message"></span>
+      </label>
       <div class="form__input-holder form__input-holder_field_image col-4 js-input-holder">
         <div class="form__img-row js-image-row"></div>
         <label class="form-input__file form-input__file_holder_image js-images-add">
@@ -51,7 +55,9 @@
         </button>
         <span class="form__error js-error-message is-hidden"></span>
       </div>
+      <button class="js-form-submit" type="button">button</button>
     </form>
+    <script src="forms.js"></script>
     <script src="index.js"></script>
 
     <style type="text/css">
@@ -87,8 +93,13 @@
       }
 
       .form-input__file.is-hidden,
-      .form__error.is-hidden {
+      .form__error.is-hidden,
+      .form__error {
         display: none;
+      }
+
+      .is-error .form__error {
+        display: block;
       }
     </style>
   </body>
