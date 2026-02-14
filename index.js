@@ -165,26 +165,28 @@ class ImgInputHandler {
     loadReader(item) {
         const { result: src } = item;
 
-        const col = this.createItem({
+        const [
+            col,
+            img,
+            btn
+        ] = [{
             tagName: 'div',
             classArr: this.imgColClassArr,
             data: {}
-        });
-        const img = this.createItem({
+        }, {
             tagName: 'img',
             classArr: this.imgClassArr,
             data: {
                 src,
                 alt: ''
             }
-        });
-        const btn = this.createItem({
+        }, {
             tagName: 'button',
             classArr: this.imgBtnClassArr,
             data: {
                 type: 'button'
             }
-        });
+        }].map(data => this.createItem(data));
 
         btn.addEventListener('click', this.removeItem.bind(this));
 
